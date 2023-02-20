@@ -1029,6 +1029,9 @@ class MAVLinkUAV(UAVBase):
         #: Scheduled takeoff time of the drone, as a UNIX timestamp, in seconds
         self._scheduled_takeoff_time = None
 
+        #: Controller State if applicable
+        self._controller_state = None
+
         #: Scheduled takeoff time of the drone, as a GPS time-of-week timestamp,
         #: in seconds
         self._scheduled_takeoff_time_gps_time_of_week = None
@@ -1041,8 +1044,17 @@ class MAVLinkUAV(UAVBase):
 
         self.notify_updated = None  # type: ignore
         self.send_log_message_to_gcs = None  # type: ignore
+        
+        signals = self.driver.app.import_api("signals")
+        self.controller_signal = signals.get("controller:button_press")
+        #self.controller_signal.connect(self.print_debug)
+
 
         self._reset_mavlink_version()
+
+    def print_debug(self, state):
+        self.driver.app.log.info(f"Controller state: {state}")
+        
 
     def assign_to_network_and_system_id(self, network_id: str, system_id: int) -> None:
         """Assigns the UAV to the MAVLink network with the given network ID.
@@ -1440,6 +1452,42 @@ class MAVLinkUAV(UAVBase):
         self._update_errors_from_drone_show_status_packet(data)
         self.update_status(light=data.light, gps=self._gps_fix, debug=debug)
         self.notify_updated()
+
+    def handle_message_named_float(self, message: MAVLinkMessage):
+        """Handles an incoming named float message targeted at this UAV."""
+        name = message.name
+        value = int(message.value)
+        self._controller_state = value
+        #self.driver.log.warn(f"{name} | {value}")
+
+        
+        if value == 33:
+            #this is a button press
+            chars = list(name)
+            if chars[1] == "1":
+                #reload
+                #self.driver.log.warn("RELOAD PRESSED")
+                send_data = {"player": str(self.system_id),
+                            "button": "reload"}
+                self.controller_signal.send(send_data)
+            if chars[2] == "1":
+                #trigger
+                #self.driver.log.warn("TRIGGER PRESSED")
+                send_data = {"player": str(self.system_id),
+                            "button": "trigger"}
+                self.controller_signal.send(send_data)
+            if chars[3] == "1":
+                #top button
+                #self.driver.log.warn("TOP PRESSED")
+                send_data = {"player": str(self.system_id),
+                            "button": "top"}
+                self.controller_signal.send(send_data)
+           
+
+                
+            #self.driver.log.error("self._controller_state = {}".format(self._controller_state))
+            #self.driver.log.warn(f"{name} | {value}")
+          
 
     def handle_message_heartbeat(self, message: MAVLinkMessage):
         """Handles an incoming MAVLink HEARTBEAT message targeted at this UAV."""

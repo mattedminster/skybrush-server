@@ -590,6 +590,7 @@ class MAVLinkNetwork:
         network.
         """
         async for _ in periodic(1):
+            
             await manager.broadcast_packet(
                 HEARTBEAT_SPEC, destination=Channel.PRIMARY, allow_failure=True
             )
@@ -623,6 +624,7 @@ class MAVLinkNetwork:
             "MISSION_CURRENT": nop,  # maybe later?
             "MISSION_ITEM_INT": nop,  # used for mission and geofence download / upload
             "MISSION_REQUEST": nop,  # used for mission and geofence download / upload
+            "NAMED_VALUE_FLOAT": self._handle_message_named_float,
             "NAV_CONTROLLER_OUTPUT": nop,
             "PARAM_VALUE": nop,
             "POSITION_TARGET_GLOBAL_INT": nop,
@@ -634,7 +636,7 @@ class MAVLinkNetwork:
         }
 
         autopilot_component_id = MAVComponent.AUTOPILOT1
-
+        
         # Many third-party MAVLink-based drones do not respond to broadcast
         # messages sent to them with an IP address of 255.255.255.255 as they
         # listen to the subnet-specific broadcast address only (e.g., 192.168.0.255).
@@ -661,6 +663,7 @@ class MAVLinkNetwork:
 
             # Get the message type
             type = message.get_type()
+            #self.log.error("type: {}".format(type))
 
             # Resolve all futures that are waiting for this message
             for system_id, params, future in self._matchers[type]:
@@ -715,6 +718,13 @@ class MAVLinkNetwork:
             uav = self._find_uav_from_message(message, address)
             if uav:
                 uav.handle_message_drone_show_status(message)
+    
+    def _handle_message_named_float(
+        self, message: MAVLinkMessage, *, connection_id: str, address: Any
+    ):
+        uav = self._find_uav_from_message(message, address)
+        if uav:
+            uav.handle_message_named_float(message)
 
     def _handle_message_global_position_int(
         self, message: MAVLinkMessage, *, connection_id: str, address: Any

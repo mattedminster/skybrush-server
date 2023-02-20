@@ -46,11 +46,11 @@ flockwave-mavlink = {version = ">=0.1.0", source = "fury"}
 flockwave-net = {extras = ["async"], version = "^4.0.0", source = "fury"}
 flockwave-parsers = {version = "^2.0.1", source = "fury"}
 flockwave-spec = {version = "^1.67.0", source = "fury"}
-skybrush-ext-dock = {version = "^1.0.0", source = "collmot", optional = true}
-skybrush-ext-flockctrl = {version = "^2.10.0", source = "collmot", optional = true}
-skybrush-ext-map-cache = {version = "^1.0.0", source = "collmot", optional = true}
-skybrush-ext-sidekick = {version = "^1.0.1", source = "collmot", optional = true}
-skybrush-ext-timecode = {version = "^1.0.2", source = "collmot", optional = true}
+# skybrush-ext-dock = {version = "^1.0.0", source = "collmot", optional = true}
+# skybrush-ext-flockctrl = {version = "^2.10.0", source = "collmot", optional = true}
+# skybrush-ext-map-cache = {version = "^1.0.0", source = "collmot", optional = true}
+# skybrush-ext-sidekick = {version = "^1.0.1", source = "collmot", optional = true}
+# skybrush-ext-timecode = {version = "^1.0.2", source = "collmot", optional = true}
 pyledctrl = {version = "^4.0.1", source = "fury"}
 aiocflib = "^2.6.0"
 appdirs = "^1.4.4"
@@ -62,6 +62,10 @@ compose = "^1.1.1"
 adrenaline = "^1.1.0"
 httpx = ">=0.18.2"
 igrf-model = "^1.1.1"
+skybrush-ext-controller-poc = {path = "/home/robot/code/skybrush/skybrush-ext-controller-poc"}
+#skybrush-ext-gaming = {path = "/home/robot/code/skybrush/skybrush-ext-gaming"}
+skybrush-ext-rl-gaming = {path = "/home/robot/code/skybrush/skybrush-ext-rl-gaming"}
+
 
 [tool.poetry.dev-dependencies]
 coverage = {extras = ["toml"], version = "^6.0.2"}

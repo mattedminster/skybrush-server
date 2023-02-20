@@ -1,0 +1,47 @@
+{
+    "EXTENSIONS": {
+      "controller_poc": {
+        "player1_id": "125",
+        "player2_id": "126",
+        "player3_id": "127",
+        "player4_id": "128",
+        "controller_update_hz": 20
+      },
+      "rl_gaming": {
+        "player1_id": "125",
+        "player2_id": "126",
+        "player3_id": "127",
+        "player4_id": "128",
+        "aws_access_key_id": "AKIASSZ25O4465BUS6PG",
+        "aws_secret_access_key": "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",
+        "home_lat": 43.04237898584537,
+        "home_lon": -70.9671497716621
+      },
+      // Make the server listen on all interfaces so it can be connected to from
+      // other machines
+      "http_server": {
+        "host": ""
+      },
+  
+      // RTK extension configuration
+      "rtk": {
+        // Add all serial ports as potential RTK data sources with baud rates 9600
+        // and 57600
+        "add_serial_ports": [9600, 57600]
+      },
+  
+      // Listen for MAVLink-based drones
+      "mavlink": {
+        "enabled": true,
+        // Listen for heartbeats on UDP port 14550, send broadcasts to UDP port 14555
+        "connections": ["default"]
+        // Delete the previous line and uncomment the following two lines to enable a
+        // secondary radio channel on port COM6, 57600 baud that is used for RTK
+        // corrections and as a fallback for commands. Do _not_ uncomment this
+        // line if you use Skybrush Sidekick to manage the radio channel.
+        // "connections": ["default", "serial:COM6?baud=57600"],
+        // "routing": {"rtk": 1}
+      }
+    }
+  }
+  
