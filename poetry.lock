@@ -1730,23 +1730,15 @@ idna2008 = ["idna"]
 
 [[package]]
 name = "setuptools"
-<<<<<<< HEAD
-version = "67.3.2"
-=======
 version = "67.3.3"
->>>>>>> b42676ce1709aed28bb419998ad3263f59e476a5
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-<<<<<<< HEAD
     {file = "setuptools-67.3.2-py3-none-any.whl", hash = "sha256:bb6d8e508de562768f2027902929f8523932fcd1fb784e6d573d2cafac995a48"},
     {file = "setuptools-67.3.2.tar.gz", hash = "sha256:95f00380ef2ffa41d9bba85d95b27689d923c93dfbafed4aecd7cf988a25e012"},
-=======
-    {file = "setuptools-67.3.3-py3-none-any.whl", hash = "sha256:9d3de8591bd6f6522594406fa46a6418eabd0562dacb267f8556675762801514"},
-    {file = "setuptools-67.3.3.tar.gz", hash = "sha256:ed4e75fafe103c79b692f217158ba87edf38d31004b9dbc1913debb48793c828"},
->>>>>>> b42676ce1709aed28bb419998ad3263f59e476a5
+
 ]
 
 [package.extras]
@@ -1777,95 +1769,8 @@ files = []
 develop = false
 
 [package.source]
-<<<<<<< HEAD
 type = "directory"
 url = "../../skybrush/skybrush-ext-gaming"
-=======
-type = "legacy"
-url = "https://pypi.collmot.com/simple"
-reference = "collmot"
-
-[[package]]
-name = "skybrush-ext-flockctrl"
-version = "2.12.0"
-description = "Support for flockctrl-based drones in Skybrush Server"
-category = "main"
-optional = true
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "skybrush_ext_flockctrl-2.12.0-py3-none-any.whl", hash = "sha256:0ba53a9d2037da618132fb2d5e5b6ee643b6a7a79a50930a298284015fc15ad7"},
-    {file = "skybrush_ext_flockctrl-2.12.0.tar.gz", hash = "sha256:1b3986e68e42e0a25891ef2d5ecdc596994b721c39519b0420aa703688ec6120"},
-]
-
-[package.dependencies]
-bidict = ">=0.22.0"
-colour = ">=0.1.5"
-flockwave-flockctrl = ">=2.8.0,<3.0.0"
-paramiko = ">=2.10.3,<3.0.0"
-scp = ">=0.14.4"
-trio = ">=0.21.0"
-trio-parallel = ">=1.0.0,<2.0.0"
-
-[package.source]
-type = "legacy"
-url = "https://pypi.collmot.com/simple"
-reference = "collmot"
-
-[[package]]
-name = "skybrush-ext-map-cache"
-version = "1.0.0"
-description = "Offline map caching for Skybrush Server"
-category = "main"
-optional = true
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "skybrush_ext_map_cache-1.0.0-py3-none-any.whl", hash = "sha256:a95c2305722ab605bc16d08fa62f3493a610b944359920d7790b72ba71e39783"},
-    {file = "skybrush_ext_map_cache-1.0.0.tar.gz", hash = "sha256:79bfa5bc8d18a2874342c0f732ab46446547e8485446508bb595843e4b33182b"},
-]
-
-[package.source]
-type = "legacy"
-url = "https://pypi.collmot.com/simple"
-reference = "collmot"
-
-[[package]]
-name = "skybrush-ext-sidekick"
-version = "1.0.1"
-description = "Skybrush Sidekick support for Skybrush Server"
-category = "main"
-optional = true
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "skybrush-ext-sidekick-1.0.1.tar.gz", hash = "sha256:0d43136a596242abe8db02634852c4eb1e3176cfcb5b24040205150c45a51d15"},
-    {file = "skybrush_ext_sidekick-1.0.1-py3-none-any.whl", hash = "sha256:721b5c58d4430de3fa95e22f5f1c514215737aa4516f94613497ecf5acbf4805"},
-]
-
-[package.source]
-type = "legacy"
-url = "https://pypi.collmot.com/simple"
-reference = "collmot"
-
-[[package]]
-name = "skybrush-ext-timecode"
-version = "1.0.2"
-description = "SMPTE timecode support for Skybrush Server"
-category = "main"
-optional = true
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "skybrush-ext-timecode-1.0.2.tar.gz", hash = "sha256:af33bc8732e2894c2df6bf7db213e66b02d92545eda81f81c7dce4c0a43ac988"},
-    {file = "skybrush_ext_timecode-1.0.2-py3-none-any.whl", hash = "sha256:07a0b3447f687ec0cd5c463de2a69523d9ba2b76960dd2c539d98502797429fd"},
-]
-
-[package.dependencies]
-mido = ">=1.2.10,<2.0.0"
-python-rtmidi = ">=1.4.9,<2.0.0"
-
-[package.source]
-type = "legacy"
-url = "https://pypi.collmot.com/simple"
-reference = "collmot"
->>>>>>> b42676ce1709aed28bb419998ad3263f59e476a5
 
 [[package]]
 name = "sniffio"
