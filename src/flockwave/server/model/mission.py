@@ -9,9 +9,11 @@ from enum import Enum
 from typing import Any, Dict, List, Optional, Sequence, Tuple, TypedDict, Union
 
 from skybrush.geofence import get_geofence_configuration_from_show_specification
+from skybrush.safety import get_safety_configuration_from_show_specification
 
 from .geofence import GeofenceConfigurationRequest
 from .identifiers import default_id_generator
+from .safety import SafetyConfigurationRequest
 
 
 __all__ = (
@@ -40,6 +42,7 @@ __all__ = (
     "SetParameterMissionCommand",
     "TakeoffMissionCommand",
     "UpdateGeofenceMissionCommand",
+    "UpdateSafetyMissionCommand",
 )
 
 ################################################################################
@@ -194,6 +197,9 @@ class MissionItemType(Enum):
     UPDATE_GEOFENCE = "updateGeofence"
     """Command to update geofence settings."""
 
+    UPDATE_SAFETY = "updateSafety"
+    """Command to update safety settings."""
+
 
 class Marker(Enum):
     """Predefined Marker types for the `MARKER` mission item type."""
@@ -203,9 +209,6 @@ class Marker(Enum):
 
     MISSION_ENDED = "end"
     """Notify GCS that the net mission has ended."""
-
-    CUSTOM = "custom"
-    """Set up a user-defined marker for the GCS."""
 
 
 class PayloadAction(Enum):
@@ -272,6 +275,8 @@ def _generate_mission_command_from_mission_item(item: MissionItem) -> MissionCom
         command = TakeoffMissionCommand.from_json(item)
     elif type == MissionItemType.UPDATE_GEOFENCE:
         command = UpdateGeofenceMissionCommand.from_json(item)
+    elif type == MissionItemType.UPDATE_SAFETY:
+        command = UpdateSafetyMissionCommand.from_json(item)
     else:
         raise RuntimeError(f"Unhandled mission type: {type!r}")
 
@@ -345,7 +350,7 @@ def _get_longitude_from_parameters(params: Dict[str, Any]) -> float:
     return float(lon)
 
 
-def _get_marker_from_parameters(params: Dict[str, Any]) -> Tuple[Marker, str]:
+def _get_marker_from_parameters(params: Dict[str, Any]) -> Tuple[Marker, float]:
 
     marker_str = params.get("marker")
     if not isinstance(marker_str, str) or not marker_str:
@@ -354,16 +359,16 @@ def _get_marker_from_parameters(params: Dict[str, Any]) -> Tuple[Marker, str]:
         marker = Marker.MISSION_STARTED
     elif marker_str == "end":
         marker = Marker.MISSION_ENDED
-    elif marker_str == "custom":
-        marker = Marker.CUSTOM
     else:
         raise RuntimeError(f"marker type {marker_str!r} not handled yet")
 
-    message = params.get("message")
-    if message is not None and not isinstance(message, str):
-        raise RuntimeError("message must be a valid string or None")
+    ratio = params.get("ratio")
+    if not isinstance(ratio, (int, float)):
+        raise RuntimeError("ratio must be a number")
+    if ratio < 0 or ratio > 1:
+        raise RuntimeError("ratio must be between 0 and 1")
 
-    return (marker, message)
+    return (marker, ratio)
 
 
 def _get_payload_action_from_parameters(
@@ -775,12 +780,25 @@ class LandMissionCommand(MissionCommand):
             obj, expected_type=MissionItemType.LAND, expect_params=False
         )
         id = obj.get("id")
+        params = obj.get("parameters")
+        if params is not None:
+            _, velocity_z = _get_speed_from_parameters(params)
+        else:
+            velocity_z = None
 
-        return cls(id=id)
+        return cls(id=id, velocity_z=velocity_z)
 
     @property
     def json(self) -> MissionItem:
-        return {"id": self.id, "type": MissionItemType.LAND.value, "parameters": {}}
+        return {
+            "id": self.id,
+            "type": MissionItemType.LAND.value,
+            "parameters": {
+                "velocityZ": None
+                if self.velocity_z is None
+                else round(self.velocity_z, ndigits=3)
+            },
+        }
 
     @property
     def type(self) -> MissionItemType:
@@ -789,13 +807,15 @@ class LandMissionCommand(MissionCommand):
 
 @dataclass
 class MarkerMissionCommand(MissionCommand):
-    """Mission command that serves as a predefined notification to the GCS."""
+    """Mission command that serves as a predefined notification to the GCS about
+    the completion type and completion ratio of a given state in the mission."""
 
     marker: Marker
     """The type of marker to send."""
 
-    message: Optional[str] = None
-    """Optional message attached to the marker."""
+    ratio: float
+    """total-distance ratio of the net mission at the marker location. Serves
+    as a helper to be used with resumed or multi-drone missions."""
 
     @classmethod
     def from_json(cls, obj: MissionItem):
@@ -806,9 +826,9 @@ class MarkerMissionCommand(MissionCommand):
         params = obj["parameters"]
         assert params is not None
 
-        marker, message = _get_marker_from_parameters(params)
+        marker, ratio = _get_marker_from_parameters(params)
 
-        return cls(id=id, marker=marker, message=message)
+        return cls(id=id, marker=marker, ratio=ratio)
 
     @property
     def json(self) -> MissionItem:
@@ -817,7 +837,7 @@ class MarkerMissionCommand(MissionCommand):
             "type": MissionItemType.MARKER.value,
             "parameters": {
                 "marker": self.marker.value,
-                "message": self.message,
+                "ratio": self.ratio,
             },
         }
 
@@ -967,8 +987,9 @@ class TakeoffMissionCommand(MissionCommand):
         alt = _get_altitude_from_parameters(params)
         if alt is None:
             raise RuntimeError("missing required parameter: 'alt'")
+        _, velocity_z = _get_speed_from_parameters(params)
 
-        return cls(id=id, altitude=alt)
+        return cls(id=id, altitude=alt, velocity_z=velocity_z)
 
     @property
     def json(self) -> MissionItem:
@@ -977,6 +998,9 @@ class TakeoffMissionCommand(MissionCommand):
             "type": MissionItemType.TAKEOFF.value,
             "parameters": {
                 "alt": self.altitude.json,
+                "velocityZ": None
+                if self.velocity_z is None
+                else round(self.velocity_z, ndigits=3),
             },
         }
 
@@ -1024,3 +1048,41 @@ class UpdateGeofenceMissionCommand(MissionCommand):
     @property
     def type(self) -> MissionItemType:
         return MissionItemType.UPDATE_GEOFENCE
+
+
+@dataclass
+class UpdateSafetyMissionCommand(MissionCommand):
+    """Mission command that updates safety settings for the drone."""
+
+    safety: SafetyConfigurationRequest
+    """Safety related configuration object."""
+
+    @classmethod
+    def from_json(cls, obj: MissionItem):
+        _validate_mission_item(
+            obj,
+            expected_type=MissionItemType.UPDATE_SAFETY,
+            expect_params=True,
+        )
+        id = obj.get("id")
+        params = obj["parameters"]
+        assert params is not None
+
+        # we need a "safety" entry
+        safety = get_safety_configuration_from_show_specification(params)
+
+        return cls(id=id, safety=safety)
+
+    @property
+    def json(self) -> MissionItem:
+        return {
+            "id": self.id,
+            "type": MissionItemType.UPDATE_SAFETY.value,
+            "parameters": {
+                "safety": self.safety.json,
+            },
+        }
+
+    @property
+    def type(self) -> MissionItemType:
+        return MissionItemType.UPDATE_SAFETY
