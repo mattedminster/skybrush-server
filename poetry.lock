@@ -599,32 +599,6 @@ url = "https://pypi.fury.io/skybrush"
 reference = "fury"
 
 [[package]]
-<<<<<<< HEAD
-=======
-name = "flockwave-flockctrl"
-version = "2.8.0"
-description = "flockctrl protocol parser and encoder for Skybrush"
-category = "main"
-optional = true
-python-versions = ">=3.7,<4.0"
-files = [
-    {file = "flockwave_flockctrl-2.8.0-py3-none-any.whl", hash = "sha256:a35df67fb2f89a340a6844d72cc0b53a9ee1fc6fc000c25da443c8abf3a207fb"},
-    {file = "flockwave_flockctrl-2.8.0.tar.gz", hash = "sha256:cabd0790f4846845a0c0dd94a98283a1147c83d0884de62ad56d0137729cd6d4"},
-]
-
-[package.dependencies]
-crcmod = ">=1.7,<2.0"
-flockwave-gps = ">=1.4.0,<3.0.0"
-flockwave-parsers = ">=2.0.0,<3.0.0"
-hexdump = ">=3.3,<4.0"
-
-[package.source]
-type = "legacy"
-url = "https://pypi.collmot.com/simple"
-reference = "collmot"
-
-[[package]]
->>>>>>> b42676ce1709aed28bb419998ad3263f59e476a5
 name = "flockwave-gps"
 version = "2.2.0"
 description = "GPS and geography related routines and classes"
@@ -1611,8 +1585,6 @@ python-versions = ">=3.6"
 files = [
     {file = "python-json-logger-2.0.6.tar.gz", hash = "sha256:ed33182c2b438a366775c25c1219ebbd5bd7f71694c644d6b3b3861e19565ae3"},
     {file = "python_json_logger-2.0.6-py3-none-any.whl", hash = "sha256:3af8e5b907b4a5b53cae249205ee3a3d3472bd7ad9ddfaec136eec2f2faf4995"},
-<<<<<<< HEAD
-=======
 ]
 
 [[package]]
@@ -1636,7 +1608,6 @@ files = [
     {file = "python_rtmidi-1.4.9-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:04bd95dd86fef3fe8d72838f719d31875f107a842127024bfe276617961eed5d"},
     {file = "python_rtmidi-1.4.9-cp39-cp39-win32.whl", hash = "sha256:2286ab096a5603430ab1e1a664fe4d96acc40f9443f44c27e911dfad85ea3ac8"},
     {file = "python_rtmidi-1.4.9-cp39-cp39-win_amd64.whl", hash = "sha256:54d40cb794a6b079105bfb923ab0b4d5f041e9eef5dc5cce25480e4c3e3fc2f6"},
->>>>>>> b42676ce1709aed28bb419998ad3263f59e476a5
 ]
 
 [[package]]
@@ -1954,8 +1925,4 @@ pro = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-<<<<<<< HEAD
-content-hash = "771a2fc63fa8a0ba5648c0036a52aed9d9ed7f16847f07928a6fede54f8775e4"
-=======
 content-hash = "dd0c03d69e90104c73beba8afa90aed3d11059b92a106806cc6e1e9f3fe0b978"
->>>>>>> b42676ce1709aed28bb419998ad3263f59e476a5
