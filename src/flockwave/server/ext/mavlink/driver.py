@@ -139,6 +139,7 @@ class MAVLinkDriver(UAVDriver):
         self.mandatory_custom_mode = None
         self.run_in_background = None  # type: ignore
         self.send_packet = None  # type: ignore
+        self.geofence = None
 
         self._default_timeout = 2
         self._default_retries = 5
@@ -1126,6 +1127,7 @@ class MAVLinkUAV(UAVBase):
         self, configuration: GeofenceConfigurationRequest
     ) -> None:
         """Configures the geofence on the UAV."""
+        self.driver.geofence = configuration
         return await self._autopilot.configure_geofence(self, configuration)
 
     async def configure_safety(self, configuration: SafetyConfigurationRequest) -> None:
@@ -1462,10 +1464,7 @@ class MAVLinkUAV(UAVBase):
         """Handles an incoming named float message targeted at this UAV."""
         name = message.name
         value = int(message.value)
-        
-        #self.driver.log.warn(f"{name} | {value}")
 
-        
         if value == 33:
             #this is a button press
             chars = list(name)
@@ -1490,10 +1489,6 @@ class MAVLinkUAV(UAVBase):
             
         self._controller_state = name
            
-
-                
-            #self.driver.log.error("self._controller_state = {}".format(self._controller_state))
-            #self.driver.log.warn(f"{name} | {value}")
           
 
     def handle_message_heartbeat(self, message: MAVLinkMessage):
