@@ -325,7 +325,7 @@ schema = {
             "type": "string",
             "title": "Default start method for shows",
             "enum": [StartMethod.RC.value, StartMethod.AUTO.value],
-            "default": StartMethod.RC.value,
+            "default": StartMethod.AUTO.value,
             "options": {
                 "enum_titles": [StartMethod.RC.describe(), StartMethod.AUTO.describe()],
             },

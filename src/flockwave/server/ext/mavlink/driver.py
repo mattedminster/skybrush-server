@@ -1034,6 +1034,9 @@ class MAVLinkUAV(UAVBase):
         #: Controller State if applicable
         self._controller_state = 1000 #no buttons press, ignore first number then reload, trigger, top
 
+        #: Current Attitude of the drone
+        self._attitude = None
+
         #: Scheduled takeoff time of the drone, as a GPS time-of-week timestamp,
         #: in seconds
         self._scheduled_takeoff_time_gps_time_of_week = None
@@ -1489,7 +1492,11 @@ class MAVLinkUAV(UAVBase):
             
         self._controller_state = name
            
-          
+    def handle_message_attitude(self, message: MAVLinkMessage):
+        """Handles an incoming attitude message targeted at this UAV."""
+        self._attitude = message
+        #self.driver.log.warn("message: " + str(self._attitude))
+
 
     def handle_message_heartbeat(self, message: MAVLinkMessage):
         """Handles an incoming MAVLink HEARTBEAT message targeted at this UAV."""
