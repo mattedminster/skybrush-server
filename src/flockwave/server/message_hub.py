@@ -1022,7 +1022,8 @@ class MessageHub:
                     except ClosedResourceError:
                         # client is probably gone; no problem
                         pass
-                    except Exception:
+                    except Exception as e:
+                        log.error("Unexpected error in broadcast method: {}".format(e))
                         failures += 1
 
                 if failures > 0:

@@ -55,6 +55,7 @@ class BeaconStatusInfo(TimestampMixin, metaclass=ModelMeta):
         self.position: Optional[GPSCoordinate] = None
         self.heading: Optional[float] = None
         self.active = False
+        self.attitude: Optional[Any] = None
 
 
 class Beacon(ModelObject):
@@ -102,6 +103,7 @@ class Beacon(ModelObject):
         position: Optional[GPSCoordinate] = None,
         heading: Optional[float] = None,
         active: Optional[bool] = None,
+        attitude: Optional[Any] = None,
     ):
         """Updates the status information of the beacon.
 
@@ -125,6 +127,8 @@ class Beacon(ModelObject):
             self._status.heading = round(heading % 360, 2)
         if active is not None:
             self._status.active = bool(active)
+        if attitude is not None:
+            self._status.attitude = attitude
         self._status.update_timestamp()
 
         self.updated.send(self)
