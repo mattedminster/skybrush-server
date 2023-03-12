@@ -1473,19 +1473,19 @@ class MAVLinkUAV(UAVBase):
             chars = list(name)
             if chars[1] == "1" and chars[1] !=  self._controller_state[1]:
                 #reload
-                self.driver.log.warn("RELOAD PRESSED")
+                #self.driver.log.warn("RELOAD PRESSED")
                 send_data = {"player": str(self.system_id),
                             "button": "reload"}
                 self.controller_signal.send(send_data)
             if chars[2] == "1" and chars[2] !=  self._controller_state[2]:
                 #trigger
-                self.driver.log.warn("TRIGGER PRESSED")
+                #self.driver.log.warn("TRIGGER PRESSED")
                 send_data = {"player": str(self.system_id),
                             "button": "trigger"}
                 self.controller_signal.send(send_data)
             if chars[3] == "1"  and chars[3] !=  self._controller_state[3]:
                 #top button
-                self.driver.log.warn("TOP PRESSED")
+                #self.driver.log.warn("TOP PRESSED")
                 send_data = {"player": str(self.system_id),
                             "button": "top"}
                 self.controller_signal.send(send_data)
