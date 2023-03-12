@@ -61,6 +61,7 @@ igrf-model = "^1.1.1"
 skybrush-ext-controller-poc = {path = "/home/robot/code/skybrush/skybrush-ext-controller-poc"}
 #skybrush-ext-gaming = {path = "/home/robot/code/skybrush/skybrush-ext-gaming"}
 skybrush-ext-rl-gaming = {path = "/home/robot/code/skybrush/skybrush-ext-rl-gaming"}
+skybrush-ext-rc-gamepad = {path = "/home/robot/code/skybrush/skybrush-ext-rc-gamepad"}
 
 
 [tool.poetry.dev-dependencies]

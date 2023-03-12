@@ -1467,35 +1467,37 @@ class MAVLinkUAV(UAVBase):
         """Handles an incoming named float message targeted at this UAV."""
         name = message.name
         value = int(message.value)
-
+        #self.driver.log.warn("name: %s, value: %s", name, value)
         if value == 33:
             #this is a button press
             chars = list(name)
             if chars[1] == "1" and chars[1] !=  self._controller_state[1]:
                 #reload
-                #self.driver.log.warn("RELOAD PRESSED")
+                self.driver.log.warn("RELOAD PRESSED")
                 send_data = {"player": str(self.system_id),
                             "button": "reload"}
                 self.controller_signal.send(send_data)
             if chars[2] == "1" and chars[2] !=  self._controller_state[2]:
                 #trigger
-                #self.driver.log.warn("TRIGGER PRESSED")
+                self.driver.log.warn("TRIGGER PRESSED")
                 send_data = {"player": str(self.system_id),
                             "button": "trigger"}
                 self.controller_signal.send(send_data)
             if chars[3] == "1"  and chars[3] !=  self._controller_state[3]:
                 #top button
-                #self.driver.log.warn("TOP PRESSED")
+                self.driver.log.warn("TOP PRESSED")
                 send_data = {"player": str(self.system_id),
                             "button": "top"}
                 self.controller_signal.send(send_data)
-            
         self._controller_state = name
+        self._store_message(message)
            
     def handle_message_attitude(self, message: MAVLinkMessage):
         """Handles an incoming attitude message targeted at this UAV."""
         self._attitude = message
+        self._store_message(message)
         #self.driver.log.warn("message: " + str(self._attitude))
+
 
 
     def handle_message_heartbeat(self, message: MAVLinkMessage):
@@ -1551,8 +1553,13 @@ class MAVLinkUAV(UAVBase):
         if (
             age_of_last_heartbeat < 2
             and self.get_age_of_message(MAVMessageType.SYS_STATUS) > 5
-        ):
+        ): self._configure_data_streams_soon()
+
+        if self.get_age_of_message(MAVMessageType.ATTITUDE) == float('inf'):
+            self.driver.log.warn("ATTITUDE MESSAGE NOT RECEIVED. CONFIGURING DATA STREAMS")
             self._configure_data_streams_soon()
+        
+
 
         # Update error codes and basic status info
         self._update_errors_from_sys_status_and_heartbeat()
@@ -2037,9 +2044,11 @@ class MAVLinkUAV(UAVBase):
         with move_on_after(60):
             self._configuring_data_streams = True
             try:
-                await self._configure_data_streams_with_fine_grained_commands()
+                self.driver.log.info("Using legacy data stream config by default...this is not a skybrush default setting")
+                await self._configure_data_streams_with_legacy_commands()
                 success = True
             except NotSupportedError:
+                self.driver.log.error("legaaaacy!! We really shouldn't be here and it's not going to do anything!") 
                 await self._configure_data_streams_with_legacy_commands()
                 success = True
             except TooSlowError:
@@ -2065,6 +2074,7 @@ class MAVLinkUAV(UAVBase):
             (MAVMessageType.SYS_STATUS, 1),
             (MAVMessageType.GPS_RAW_INT, 1),
             (MAVMessageType.GLOBAL_POSITION_INT, 2),
+            (MAVMessageType.ATTITUDE, 1),
         ]
 
         for message_id, interval_hz in stream_rates:
@@ -2093,12 +2103,23 @@ class MAVLinkUAV(UAVBase):
             target=self,
         )
 
+
         # EXTENDED_STATUS: we need SYS_STATUS from it for the general status
         # flags and GPS_RAW_INT for the GPS fix info.
         await self.driver.send_packet(
             spec.request_data_stream(
                 req_stream_id=MAVDataStream.EXTENDED_STATUS,
                 req_message_rate=1,
+                start_stop=1,
+            ),
+            target=self,
+        )
+
+        # ATTITUDE: we need attitude for determining controller oreintation
+        await self.driver.send_packet(
+            spec.request_data_stream(
+                req_stream_id=MAVDataStream.EXTRA1,
+                req_message_rate=10,
                 start_stop=1,
             ),
             target=self,

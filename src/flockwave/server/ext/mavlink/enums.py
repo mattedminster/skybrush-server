@@ -136,6 +136,7 @@ class MAVMessageType(IntEnum):
     SYS_STATUS = 1
     SYSTEM_TIME = 2
     GPS_RAW_INT = 24
+    ATTITUDE = 30
     GLOBAL_POSITION_INT = 33
     REQUEST_DATA_STREAM = 66
     DATA_STREAM = 67
