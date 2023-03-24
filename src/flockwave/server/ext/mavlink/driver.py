@@ -1570,6 +1570,8 @@ class MAVLinkUAV(UAVBase):
 
     def handle_message_global_position_int(self, message: MAVLinkMessage):
         # TODO(ntamas): reboot detection with time_boot_ms
+       #self.driver.log.warn("blab.blah")
+       # self.driver.log.warn("message: " + str(message.relative_at))
 
         if abs(message.lat) <= 900000000:
             self._position.lat = message.lat / 1e7
