@@ -1732,7 +1732,7 @@ url = "../../skybrush/skybrush-ext-controller-poc"
 
 [[package]]
 name = "skybrush-ext-rl-gaming"
-version = "1.0.468"
+version = "1.0.500"
 description = "Base extension for gaming control integration into Skybrush"
 category = "main"
 optional = false

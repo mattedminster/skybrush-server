@@ -157,9 +157,14 @@ class DroneShowConfiguration:
         start_conditions = obj.get("start")
         if start_conditions:
             if "authorized" in start_conditions:
+                print("authorized", start_conditions["authorized"])
                 # This is intentional; in order to be on the safe side, we only
                 # accept True for authorization, not any other truthy value
-                self.authorized_to_start = start_conditions["authorized"] is True
+                if start_conditions["authorized"] is True:
+                    self.authorized_to_start = True
+                elif start_conditions["authorized"] is False:
+                    self.authorized_to_start = False
+                #self.authorized_to_start = start_conditions["authorized"] is True
                 changed = True
 
             if "time" in start_conditions:
@@ -191,4 +196,5 @@ class DroneShowConfiguration:
                     changed = True
 
         if changed:
+            #self.send_SHOW_CFG_message_for(obj)
             self.updated.send(self)

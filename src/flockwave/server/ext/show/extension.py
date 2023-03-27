@@ -52,6 +52,7 @@ class DroneShowExtension(Extension):
         return {
             "get_clock": self._get_clock,
             "get_configuration": self._get_configuration,
+            "get_configuration_obj": self._get_configuration_obj,
             "get_light_configuration": self._get_light_configuration,
         }
 
@@ -151,6 +152,10 @@ class DroneShowExtension(Extension):
     def _get_configuration(self) -> DroneShowConfiguration:
         """Returns a copy of the current drone show configuration."""
         return self._config.clone()
+    
+    def _get_configuration_obj(self) -> DroneShowConfiguration:
+        """Returns a copy of the current drone show configuration."""
+        return self._config
 
     def _get_light_configuration(self) -> LightConfiguration:
         """Returns a copy of the current LED lgiht configuration."""
