@@ -1,6 +1,12 @@
 # syntax = docker/dockerfile:1.0-experimental
 FROM python:3.9-slim AS builder
 
+
+
+RUN apt-get install debian-archive-keyring
+
+RUN apt-key update
+
 # Update all the things
 RUN apt-get update && apt-get -y upgrade
 

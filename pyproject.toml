@@ -41,8 +41,13 @@ flockwave-logger = {version = "^1.8.0", source = "fury"}
 flockwave-mavlink = {version = ">=0.1.0", source = "fury"}
 flockwave-net = {extras = ["async"], version = "^4.0.1", source = "fury"}
 flockwave-parsers = {version = "^2.0.1", source = "fury"}
-flockwave-spec = {path = "/home/robot/code/skybrush/flockwave-spec"}
+flockwave-spec = {path = "../flockwave-spec"}
 
+boto3 = "^1.0.0"
+pygame = "^2.3.0"
+matplotlib = "^3.7.0"
+shapely = "^2.0.0"
+openai = "^0.27.0"
 pyledctrl = {version = "^4.0.1", source = "fury"}
 aiocflib = "^2.6.0"
 appdirs = "^1.4.4"
@@ -54,10 +59,9 @@ compose = "^1.1.1"
 adrenaline = "^1.1.0"
 httpx = ">=0.18.2"
 igrf-model = "^1.1.1"
-skybrush-ext-controller-poc = {path = "/home/robot/code/skybrush/skybrush-ext-controller-poc"}
-#skybrush-ext-gaming = {path = "/home/robot/code/skybrush/skybrush-ext-gaming"}
-skybrush-ext-rl-gaming = {path = "/home/robot/code/skybrush/skybrush-ext-rl-gaming"}
-#skybrush-ext-rc-gamepad = {path = "/home/robot/code/skybrush/skybrush-ext-rc-gamepad"}
+skybrush-ext-controller-poc = {path = "../skybrush-ext-controller-poc"}
+skybrush-ext-rl-gaming = {path = "../skybridge-ext-rl-gaming"}
+
 
 
 [tool.poetry.dev-dependencies]

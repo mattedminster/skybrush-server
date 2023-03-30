@@ -13,10 +13,11 @@ cd ${REPO_ROOT}
 
 # Remove all requirements.txt files, we don't use them, only poetry
 rm -f requirements*.txt
+/Users/matt/.local/bin/poetry lock --no-update
 
 # Generate requirements.txt from pipenv. We use requirements-main.txt for sake
 # of consistency with deploy.sh
-poetry export -f requirements.txt --without-hashes --with-credentials | \
+/Users/matt/.local/bin/poetry export -f requirements.txt --without-hashes --with-credentials | \
     grep -v '^pyobjc' \
     >requirements-main.txt
 trap "rm -f requirements-main.txt" EXIT
