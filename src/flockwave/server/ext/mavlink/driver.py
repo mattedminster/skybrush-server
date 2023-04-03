@@ -1877,12 +1877,13 @@ class MAVLinkUAV(UAVBase):
             except RuntimeError:
                 # No position yet, just send NaN and hope for the best
                 altitude = nan
+                self.driver.log.error("No position yet, sending NaN for takeoff altitude")
 
         # set takeoff coordinate. PX4 needs NaN / NaN, ArduPilot needs 0 / 0
         lat, lon = nan, nan
         if isinstance(self._autopilot, ArduPilot):
             lat, lon = 0, 0
-
+        self.driver.log.error("Sending takeoff command with lat=%s, lon=%s, alt=%s", lat, lon, altitude)
         if not await self.driver.send_command_long(
             self,
             MAVCommand.NAV_TAKEOFF,
