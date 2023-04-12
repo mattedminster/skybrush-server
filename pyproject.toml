@@ -48,6 +48,7 @@ pygame = "^2.3.0"
 matplotlib = "^3.7.0"
 shapely = "^2.0.0"
 openai = "^0.27.0"
+scipy = "^1.1.0"
 pyledctrl = {version = "^4.0.1", source = "fury"}
 aiocflib = "^2.6.0"
 appdirs = "^1.4.4"
