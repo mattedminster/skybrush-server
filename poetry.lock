@@ -2807,7 +2807,7 @@ files = [
 
 [[package]]
 name = "skybrush-ext-controller-poc"
-version = "1.0.116"
+version = "1.0.119"
 description = "Template project for Skybrush Server extension modules"
 category = "main"
 optional = false
