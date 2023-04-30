@@ -1940,6 +1940,11 @@ class MAVLinkUAV(UAVBase):
                     extra={"id": log_id_for_uav(self)},
                 )
 
+    async def get_logs(self, path) -> None:
+        # Upload show file
+        async with aclosing(MAVFTP.for_uav(self)) as ftp:
+            await ftp.get("/collmot/show.skyb")
+
     async def upload_show(self, show) -> None:
         coordinate_system = get_coordinate_system_from_show_specification(show)
         if coordinate_system.type != "nwu":
