@@ -1060,7 +1060,7 @@ reference = "fury"
 
 [[package]]
 name = "flockwave-spec"
-version = "1.67.006"
+version = "1.67.008"
 description = "JSON-Schema specification of the Flockwave protocol"
 category = "main"
 optional = false
@@ -2821,7 +2821,7 @@ url = "../skybrush-ext-controller-poc"
 
 [[package]]
 name = "skybrush-ext-rl-gaming"
-version = "1.0.960"
+version = "1.0.976"
 description = "Base extension for gaming control integration into Skybrush"
 category = "main"
 optional = false

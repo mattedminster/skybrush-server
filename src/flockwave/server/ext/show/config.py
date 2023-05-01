@@ -45,6 +45,9 @@ class DroneShowConfiguration:
     authorized_to_start: bool
     """Whether the show is authorized to start."""
 
+    name: str
+    """The name of the show(game)."""
+
     start_method: StartMethod
     """The start method of the show (RC or automatic with countdown)."""
 
@@ -67,6 +70,7 @@ class DroneShowConfiguration:
         """Constructor."""
         self.authorized_to_start = False
         self.clock = None
+        self.name = None
         self.start_time_on_clock = None
         self.start_method = StartMethod.RC
         self.uav_ids = []
@@ -130,6 +134,7 @@ class DroneShowConfiguration:
             "start": {
                 "authorized": bool(self.authorized_to_start),
                 "clock": self.clock,
+                "name": self.name,
                 "time": self.start_time_on_clock,
                 "method": str(self.start_method.value),
                 "uavIds": self.uav_ids,
@@ -153,11 +158,14 @@ class DroneShowConfiguration:
     def update_from_json(self, obj: Dict[str, Any]) -> None:
         """Updates the configuration object from its JSON representation."""
         changed = False
+        print("obj", obj)
 
         start_conditions = obj.get("start")
+        print("start_conditions", start_conditions)
         if start_conditions:
             if "authorized" in start_conditions:
                 print("authorized", start_conditions["authorized"])
+                print("name", start_conditions["name"])
                 # This is intentional; in order to be on the safe side, we only
                 # accept True for authorization, not any other truthy value
                 if start_conditions["authorized"] is True:
@@ -166,6 +174,12 @@ class DroneShowConfiguration:
                     self.authorized_to_start = False
                 #self.authorized_to_start = start_conditions["authorized"] is True
                 changed = True
+
+            if "name" in start_conditions:
+                name = start_conditions["name"]
+                if name is None or isinstance(name, str):
+                    self.name = name
+                    changed = True
 
             if "time" in start_conditions:
                 start_time = start_conditions["time"]
