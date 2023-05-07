@@ -709,6 +709,9 @@ class UAVDriver(metaclass=ABCMeta):
             errors or awaitables; it is the responsibility of the caller to
             evaluate errors and wait for awaitables)
         """
+        print("send_light_or_sound_emission_signal")
+        print(signals)
+        print(duration)
         return self._send_signal(
             uavs,
             "light or sound emission signal",

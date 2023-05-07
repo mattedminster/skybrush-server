@@ -797,8 +797,10 @@ class MAVLinkDriver(UAVDriver):
         self, signals: List[str], duration: int, *, transport=None
     ) -> None:
         channel = transport_options_to_channel(transport)
-
+        self.driver.app.log.warn("Sending light or sound emission signal")
+        self.driver.app.log.warn("Signals: %s", signals)
         if "light" in signals:
+
             message = create_led_control_packet(broadcast=True)
             await self.broadcast_packet(message, channel=channel)
 
@@ -806,7 +808,8 @@ class MAVLinkDriver(UAVDriver):
         self, uav: "MAVLinkUAV", signals: List[str], duration: int, *, transport=None
     ) -> None:
         channel = transport_options_to_channel(transport)
-
+        self.driver.app.log.warng("Sending light or sound emission signal")
+        self.driver.app.log.warn("Signals: %s", signals)
         if "light" in signals:
             message = create_led_control_packet()
             await self.send_packet(message, uav, channel=channel)
