@@ -10,4 +10,4 @@ else
   CONFIG_FILE=rl-skybrush-ubuntu.jsonc
 fi
 
-poetry shell && poetry lock --no-update && poetry install && skybrushd -c ../skybridge-ext-rl-gaming/$CONFIG_FILE
+source "$(poetry env info --path)/bin/activate" && poetry lock --no-update && poetry install && skybrushd -c ../skybridge-ext-rl-gaming/$CONFIG_FILE
