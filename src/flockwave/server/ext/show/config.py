@@ -158,10 +158,10 @@ class DroneShowConfiguration:
     def update_from_json(self, obj: Dict[str, Any]) -> None:
         """Updates the configuration object from its JSON representation."""
         changed = False
-        print("obj", obj)
+        #print("obj", obj)
 
         start_conditions = obj.get("start")
-        print("start_conditions", start_conditions)
+        #print("start_conditions", start_conditions)
         if start_conditions:
             if "authorized" in start_conditions:
                 print("authorized", start_conditions["authorized"])

@@ -1291,7 +1291,7 @@ class MAVLinkUAV(UAVBase):
         )
         try:
             await self.driver.send_packet_with_retries(
-                message, self, wait_for_response=response, timeout=0.2, retries=4
+                message, self, wait_for_response=response, timeout=0.01, retries=2
             )
         except TooSlowError:
             # Maybe it's okay anyway, see comment above
