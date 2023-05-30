@@ -1035,7 +1035,7 @@ class MAVLinkUAV(UAVBase):
         self._scheduled_takeoff_time = None
 
         #: Controller State if applicable
-        self._controller_state = 1000 #no buttons press, ignore first number then reload, trigger, top
+        self._controller_state = "1000" #no buttons press, ignore first number then reload, trigger, top
 
         #: Current Attitude of the drone
         self._attitude = None
@@ -1470,10 +1470,14 @@ class MAVLinkUAV(UAVBase):
         """Handles an incoming named float message targeted at this UAV."""
         name = message.name
         value = int(message.value)
+        chars = list(name)
+
         #self.driver.log.warn("name: %s, value: %s", name, value)
         if value == 33:
             #this is a button press
-            chars = list(name)
+            #self.driver.log.warn("type: %s", type(name))
+            #self.driver.log.warn("chars: %s", type(chars))
+            #self.driver.log.warn("type self._controller_state: %s", type(self._controller_state))
             if chars[1] == "1" and chars[1] !=  self._controller_state[1]:
                 #reload
                 #self.driver.log.warn("RELOAD PRESSED")
@@ -1492,7 +1496,7 @@ class MAVLinkUAV(UAVBase):
                 send_data = {"player": str(self.system_id),
                             "button": "top"}
                 self.controller_signal.send(send_data)
-        self._controller_state = name
+        self._controller_state = chars
         self._store_message(message)
            
     def handle_message_attitude(self, message: MAVLinkMessage):
