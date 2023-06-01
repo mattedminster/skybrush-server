@@ -3020,7 +3020,7 @@ url = "../skybrush-ext-controller-poc"
 
 [[package]]
 name = "skybrush-ext-rl-gaming"
-version = "1.0.1344"
+version = "1.0.1376"
 description = "Base extension for gaming control integration into Skybrush"
 category = "main"
 optional = false

@@ -140,6 +140,7 @@ class MAVLinkDriver(UAVDriver):
         self.run_in_background = None  # type: ignore
         self.send_packet = None  # type: ignore
         self.geofence = None
+        self.origin = None
 
         self._default_timeout = 2
         self._default_retries = 5
@@ -1965,6 +1966,9 @@ class MAVLinkUAV(UAVBase):
         if coordinate_system.type != "nwu":
             raise RuntimeError("Only NWU coordinate systems are supported")
 
+        self.driver.log.warning("origin: %s", coordinate_system.origin)
+        self.origin = coordinate_system.origin
+        self.driver.log.warning("driver origin: %s", self.origin)
         altitude_reference = get_altitude_reference_from_show_specification(show)
         light_program = get_light_program_from_show_specification(show)
         trajectory = get_trajectory_from_show_specification(show)
