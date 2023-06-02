@@ -1292,7 +1292,7 @@ class MAVLinkUAV(UAVBase):
         )
         try:
             await self.driver.send_packet_with_retries(
-                message, self, wait_for_response=response, timeout=0.05, retries=1
+                message, self, wait_for_response=response, timeout=0.01, retries=0
             )
         except TooSlowError:
             # Maybe it's okay anyway, see comment above
@@ -1966,9 +1966,9 @@ class MAVLinkUAV(UAVBase):
         if coordinate_system.type != "nwu":
             raise RuntimeError("Only NWU coordinate systems are supported")
 
-        self.driver.log.warning("origin: %s", coordinate_system.origin)
+
         self.origin = coordinate_system.origin
-        self.driver.log.warning("driver origin: %s", self.origin)
+
         altitude_reference = get_altitude_reference_from_show_specification(show)
         light_program = get_light_program_from_show_specification(show)
         trajectory = get_trajectory_from_show_specification(show)

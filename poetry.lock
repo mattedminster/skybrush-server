@@ -3006,7 +3006,7 @@ files = [
 
 [[package]]
 name = "skybrush-ext-controller-poc"
-version = "1.0.122"
+version = "1.0.123"
 description = "Template project for Skybrush Server extension modules"
 category = "main"
 optional = false
@@ -3020,7 +3020,7 @@ url = "../skybrush-ext-controller-poc"
 
 [[package]]
 name = "skybrush-ext-rl-gaming"
-version = "1.0.1379"
+version = "1.0.1391"
 description = "Base extension for gaming control integration into Skybrush"
 category = "main"
 optional = false
