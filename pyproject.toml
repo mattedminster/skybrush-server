@@ -43,7 +43,7 @@ flockwave-net = {extras = ["async"], version = "^4.0.1", source = "fury"}
 flockwave-parsers = {version = "^2.0.1", source = "fury"}
 flockwave-spec = {path = "../flockwave-spec"}
 
-
+couchdb = ">=1.2.0"
 elevenlabs = "^0.2.0"
 pygame = "^2.3.0"
 matplotlib = "^3.7.0"
