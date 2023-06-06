@@ -18,3 +18,4 @@ __pycache__/
 skybrush.cfg
 .DS_Store
 rl.log
+poetry.lock
