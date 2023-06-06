@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm ./skybrush-server/rl.log
+
 # Function to handle script termination
 cleanup() {
     echo "Terminating skybrushd..."
@@ -25,4 +27,4 @@ fi
 python3 ../increment_pytoml.py ../skybridge-ext-rl-gaming/pyproject.toml
 
 # Activate poetry environment and run skybrushd
-source "$(~/.local/bin/poetry env info --path)/bin/activate" && ~/.local/bin/poetry lock --no-update && ~/.local/bin/poetry install && skybrushd -c ../skybridge-ext-rl-gaming/$CONFIG_FILE
+source "$(~/.local/bin/poetry env info --path)/bin/activate" && ~/.local/bin/poetry lock --no-update && ~/.local/bin/poetry install && skybrushd -c ../skybridge-ext-rl-gaming/$CONFIG_FILE  2>&1 | tee rl.log

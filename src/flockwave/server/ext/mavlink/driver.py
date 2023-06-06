@@ -1948,17 +1948,36 @@ class MAVLinkUAV(UAVBase):
                     extra={"id": log_id_for_uav(self)},
                 )
 
-    # async def get_logs(self, path) -> None:
-    #     # Upload show file
-    #     async with aclosing(MAVFTP.for_uav(self)) as ftp:
-    #         obj = None
-    #         obj = await ftp.get("/collmot/show.skyb")
-    #         self.driver.log.warn("Got show.skyb")
-    #         self.driver.log.warn("obj: %s", obj)
-    #         self.driver.log.warn("type(obj): %s", type(obj))
-    #         #write to disk
-    #         with open("test.skyb", "wb") as f:
-    #             f.write(obj)
+    async def get_logs(self, path) -> None:
+        self.driver.log.warn("RETRIEVING LOGS")
+        # Upload show file
+        async with aclosing(MAVFTP.for_uav(self)) as ftp:
+            self.driver.log.warn("ftp: %s", ftp)
+            obj = None
+            obj = await ftp.get(path)
+            self.driver.log.warn("file is downloaded")
+            #self.driver.log.warn("type(obj): %s", type(obj))
+            return obj
+            #write to disk
+            #with open("test.skyb", "wb") as f:
+            #    f.write(obj)
+
+    async def del_log(self, path) -> None:
+        # Upload show file
+        async with aclosing(MAVFTP.for_uav(self)) as ftp:
+            obj = None
+            obj = await ftp.rm(path)
+            self.driver.log.warn("deleting %s", obj)
+
+    async def ls_logs(self, path) -> None:
+        # Upload show file
+        async with aclosing(MAVFTP.for_uav(self)) as ftp:
+            obj = None
+            obj = ftp.ls(path)
+            self.driver.log.warn("ls: %s", obj)
+            async for file in obj:
+                self.driver.log.warn("file: %s", file)
+            
 
 
     async def upload_show(self, show) -> None:

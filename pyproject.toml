@@ -43,6 +43,7 @@ flockwave-net = {extras = ["async"], version = "^4.0.1", source = "fury"}
 flockwave-parsers = {version = "^2.0.1", source = "fury"}
 flockwave-spec = {path = "../flockwave-spec"}
 
+
 couchdb = ">=1.2.0"
 elevenlabs = "^0.2.0"
 pygame = "^2.3.0"
@@ -63,6 +64,7 @@ httpx = ">=0.18.2"
 igrf-model = "^1.1.1"
 skybrush-ext-controller-poc = {path = "../skybrush-ext-controller-poc"}
 skybrush-ext-rl-gaming = {path = "../skybridge-ext-rl-gaming"}
+boto3 = "^1.26.147"
 
 
 
