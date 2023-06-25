@@ -43,6 +43,8 @@ flockwave-net = {extras = ["async"], version = "^4.0.1", source = "fury"}
 flockwave-parsers = {version = "^2.0.1", source = "fury"}
 flockwave-spec = {path = "../flockwave-spec"}
 
+soundfile = ">=0.12.0"
+pydub = ">=0.25.0"
 sounddevice = ">=0.4.3"
 pyaudio = ">=0.2.11"
 couchdb = ">=1.2.0"
