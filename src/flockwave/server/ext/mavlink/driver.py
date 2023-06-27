@@ -1134,6 +1134,7 @@ class MAVLinkUAV(UAVBase):
         self, configuration: GeofenceConfigurationRequest
     ) -> None:
         """Configures the geofence on the UAV."""
+        self.driver.log.warn("Configuring geofence on UAV")
         self.driver.geofence = configuration
         return await self._autopilot.configure_geofence(self, configuration)
 
