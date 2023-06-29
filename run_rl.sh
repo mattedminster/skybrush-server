@@ -22,4 +22,4 @@ else
 fi
 
 # Activate poetry environment and run skybrushd
-source "$(~/.local/bin/poetry env info --path)/bin/activate" && skybrushd -c ../skybridge-ext-rl-gaming/$CONFIG_FILE
+source "$(poetry env info --path)/bin/activate" && skybrushd -c ../skybridge-ext-rl-gaming/$CONFIG_FILE
