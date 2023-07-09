@@ -1134,7 +1134,7 @@ class MAVLinkUAV(UAVBase):
         self, configuration: GeofenceConfigurationRequest
     ) -> None:
         """Configures the geofence on the UAV."""
-        self.driver.log.warn("Configuring geofence on UAV: %r", configuration)
+        #self.driver.log.warn("Configuring geofence on UAV: %r", configuration)
         #self.driver.log.warn("self.driver.geofence before: %r", self.driver.geofence)
         self.driver.geofence = configuration
         #self.driver.log.warn("self.driver.geofence after: %r", self.driver.geofence)
