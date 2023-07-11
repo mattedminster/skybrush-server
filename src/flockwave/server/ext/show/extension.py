@@ -69,7 +69,7 @@ class DroneShowExtension(Extension):
     def handle_SHOW_SETCFG(self, message, sender, hub):
         try:
             config = message.body.get("configuration", {})
-            self.log.warning("Received SHOW-SETCFG: %s", config)
+            #self.log.warning("Received SHOW-SETCFG: %s", config)
             # If the "config" object contains a key named "start", and it has
             # no sub-key named "clock", it means that we are working with an
             # older version of Skybrush Live that did not have support for
