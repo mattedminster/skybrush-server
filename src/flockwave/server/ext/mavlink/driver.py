@@ -1472,7 +1472,7 @@ class MAVLinkUAV(UAVBase):
         value = int(message.value)
         chars = list(name)
 
-        #self.driver.log.warn("name: %s, value: %s", name, value)
+        self.driver.log.warn("name: %s, value: %s", name, value)
         if value == 33:
             #this is a button press
             #self.driver.log.warn("type: %s", type(name))
