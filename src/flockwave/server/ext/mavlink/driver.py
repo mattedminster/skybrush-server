@@ -1471,8 +1471,8 @@ class MAVLinkUAV(UAVBase):
         name = message.name
         value = int(message.value)
         chars = list(name)
-        if self.system_id == 128:
-            self.driver.log.warn("name: %s, value: %s", name, value)
+        # if self.system_id == 128:
+        #     self.driver.log.warn("name: %s, value: %s", name, value)
         if value == 33:
             #this is a button press
             #self.driver.log.warn("type: %s", type(name))
@@ -1486,13 +1486,13 @@ class MAVLinkUAV(UAVBase):
                 self.controller_signal.send(send_data)
             if chars[2] == "1" and chars[2] !=  self._controller_state[2]:
                 #trigger
-                self.driver.log.warn(f"TRIGGER PRESSED: {self.system_id}")
+                #self.driver.log.warn(f"TRIGGER PRESSED: {self.system_id}")
                 send_data = {"player": str(self.system_id),
                             "button": "trigger"}
                 self.controller_signal.send(send_data)
             if chars[3] == "0"  and chars[3] !=  self._controller_state[3]:
                 #top button
-                self.driver.log.warn("TOP PRESSED")
+                #self.driver.log.warn("TOP PRESSED")
                 send_data = {"player": str(self.system_id),
                             "button": "top"}
                 self.controller_signal.send(send_data)
