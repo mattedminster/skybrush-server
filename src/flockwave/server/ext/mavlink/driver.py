@@ -1486,7 +1486,7 @@ class MAVLinkUAV(UAVBase):
                 self.controller_signal.send(send_data)
             if chars[2] == "1" and chars[2] !=  self._controller_state[2]:
                 #trigger
-                #self.driver.log.warn("TRIGGER PRESSED")
+                self.driver.log.warn(f"TRIGGER PRESSED: {self.system_id}")
                 send_data = {"player": str(self.system_id),
                             "button": "trigger"}
                 self.controller_signal.send(send_data)
