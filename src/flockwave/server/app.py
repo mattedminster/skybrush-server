@@ -672,9 +672,13 @@ class SkybrushServer(DaemonApp):
         self.rate_limiters.request_to_send("UAV-INF", uav_ids)
 
     async def run(self) -> None:
+        log.exception("HELLO")
         self.run_in_background(self.command_execution_manager.run)
+        log.exception("X_MGR")
         self.run_in_background(self.message_hub.run)
+        log.exception("MGR")
         self.run_in_background(self.rate_limiters.run)
+        log.exception("RL")
         return await super().run()
 
     def sort_uavs_by_drivers(

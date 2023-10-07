@@ -87,12 +87,16 @@ def start(
 
     # Log what we are doing
     log.info(f"Starting Skybrush server {__version__}")
+    log.info(f"Starting Skybrush config {config}")
+    log.info(f"Starting Skybrush debug {debug}")
 
     # Configure the application
     retval = app.prepare(config, debug=debug)
+    log.info(f"App prepared: {retval}")
     if retval is not None:
         return retval
 
+    log.info("App prepared")
     # Now start the server
     trio.run(app.run)
 
