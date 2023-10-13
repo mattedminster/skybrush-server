@@ -16,11 +16,11 @@ trap cleanup EXIT
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # Mac OS
   echo "Running on Mac OS"
-  CONFIG_FILE=rl-skybrush-mac-sim.jsonc
+  CONFIG_FILE=rl-skybrush-mac.jsonc
 else
   # Linux
   echo "Running on Linux"
-  CONFIG_FILE=rl-skybrush-ubuntu-sim.jsonc
+  CONFIG_FILE=rl-skybrush-ubuntu.jsonc
 fi
 
 
