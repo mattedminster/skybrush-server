@@ -1130,10 +1130,10 @@ class MAVLinkUAV(UAVBase):
         self, configuration: GeofenceConfigurationRequest
     ) -> None:
         """Configures the geofence on the UAV."""
-        #self.driver.log.warn("Configuring geofence on UAV: %r", configuration)
-        #self.driver.log.warn("self.driver.geofence before: %r", self.driver.geofence)
+        self.driver.log.warn("Configuring geofence on UAV: %r", configuration)
+        self.driver.log.warn("self.driver.geofence before: %r", self.driver.geofence)
         self.driver.geofence = configuration
-        #self.driver.log.warn("self.driver.geofence after: %r", self.driver.geofence)
+        self.driver.log.warn("self.driver.geofence after: %r", self.driver.geofence)
         return await self._autopilot.configure_geofence(self, configuration)
 
     async def configure_safety(self, configuration: SafetyConfigurationRequest) -> None:
@@ -1980,6 +1980,9 @@ class MAVLinkUAV(UAVBase):
 
 
     async def upload_show(self, show) -> None:
+        self.driver.log.warn("UPLOADING SHOW")
+        self.driver.log.warn(f"show: {show}")
+
         coordinate_system = get_coordinate_system_from_show_specification(show)
         if coordinate_system.type != "nwu":
             raise RuntimeError("Only NWU coordinate systems are supported")
