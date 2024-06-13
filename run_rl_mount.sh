@@ -24,6 +24,10 @@ else
 fi
 
 
+poetry install
 
-# Activate poetry environment and run skybrushd
-poetry install && poetry run skybrushd -c ../skybridge-ext-rl-gaming/$CONFIG_FILE  2>&1 | tee rl.log
+poetry run pip uninstall netifaces-plus -y
+
+poetry run pip install netifaces
+
+poetry run skybrushd -c ../skybridge-ext-rl-gaming/$CONFIG_FILE  2>&1 | tee rl.log
